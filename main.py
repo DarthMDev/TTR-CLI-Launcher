@@ -105,10 +105,6 @@ def download_content_mirror_files(content_mirror_url, patch_manifest_url, header
     # Download patch manifest file
     response = requests.get(patch_manifest_url)
     patch_manifest = response.text
-    # make a directory for storing the game files
-    if not os.path.exists("Toontown Rewritten"):
-        os.mkdir("Toontown Rewritten")
-    os.chdir("Toontown Rewritten")
     
     # convert the patch manifest to a dictionary
     patch_manifest = eval(patch_manifest)
@@ -125,8 +121,6 @@ def download_content_mirror_files(content_mirror_url, patch_manifest_url, header
     
         download_file(content_mirror_url, file, patch_manifest, headers)
         # TODO estimate percentage of completion
-    if os.getcwd().split("/")[-1] == "Toontown Rewritten":
-        os.chdir("..")
     
 def toon_guard_authenticate(username, password):
     print("Enter your toonguard code, or type 'resend' to resend the code.")
@@ -174,7 +168,7 @@ def main():
     # before launching lets make sure everything is executable
     if sys.platform == "darwin":
        # make the Toontown Rewritten executable,  executable
-         os.chmod("Toontown Rewritten/Toontown Rewritten", 0o755)
+        os.system("chmod +x ./Toontown\ Rewritten")
     
 
     username = input("Enter your Toontown Rewritten username: ")
@@ -195,6 +189,7 @@ def main():
         else:
             # login failed
             print("Login failed:".format(login_data["banner"]))
+            print('Most likely your account is banned or you entered the wrong username or password.')
             sys.exit(1)
         
 
@@ -208,19 +203,17 @@ def main():
 
         # launch for mac 
         if sys.platform == "darwin":
-            # if these directories don't exist, make them
-            if not os.path.exists("Toontown Rewritten/Frameworks"):
-                os.mkdir("Toontown Rewritten/Frameworks")
 
-            subprocess.Popen(["Toontown Rewritten/Toontown Rewritten"])
+            subprocess.Popen(["./Toontown Rewritten"])
         # launch for linux
         elif sys.platform == "linux":
             # make the TTREngine,  executable
-            os.chmod("Toontown Rewritten/TTREngine", 0o755)
-            subprocess.Popen(["Toontown Rewritten/TTREngine"])
+            os.system("chmod +x ./TTREngine")
+
+            subprocess.Popen(["./TTREngine"])
         # launch for windows
         elif sys.platform == "win32":
-            subprocess.Popen(["Toontown Rewritten/TTREngine.exe"])
+            subprocess.Popen(["./TTREngine.exe"])
        
                        
     else:

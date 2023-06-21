@@ -153,3 +153,7 @@ cython_debug/
 .DS_Store
 
 Toontown Rewritten/
+*.mf
+Toontown Rewritten
+TTRGame.vlt
+settings.json
